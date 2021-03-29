@@ -1,9 +1,30 @@
+import {createUseStyles} from 'react-jss';
+
+const useStyles = createUseStyles({
+todoInputForm: {
+  display: 'flex',
+  flexDirection: 'column',
+
+},
+  form: {
+  display: 'flex',
+  flexDirection: 'column',
+},
+
+button: {
+  display: 'flex',
+justifyContent: 'space-between '},
+});
+
+
 const TodosInputForm = () => {
+const classes = useStyles();
+
   return <div className='todos-input-form'>
 <button>
   +Add todos
 </button>
-<form>
+<form className={classes.form}>
   <input type='text'></input>
   <div>
     <span>urgency:</span>
