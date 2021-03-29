@@ -28,6 +28,8 @@ const [urgency, setUrgency] = useState('low');
 const toggleForm = () => setShowForm( (prevValue) => !prevValue);
 const handleSubmit = e => {
   e.preventDefault();
+  
+if (!value) return;
 
   const newTodo = {
     id: Date.now(),
