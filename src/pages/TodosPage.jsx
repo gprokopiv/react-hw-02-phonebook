@@ -3,7 +3,8 @@ import TodosInputForm from '../components/TodosInputForm';
 
 
 const TodoPage = () => {
-  <div className='todos'> 
+  return (
+    <div className='todos'> 
     <h1>
       Todos
     </h1>
@@ -11,6 +12,7 @@ const TodoPage = () => {
     <TodosList />
 
   </div>
+  )
 }
 
 export default TodoPage;
