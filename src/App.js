@@ -6,6 +6,7 @@ class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
   render() {
@@ -21,6 +22,14 @@ class App extends Component {
           required
         />{' '}
         <br></br>
+        <p>Number</p>
+        <input
+          type="tel"
+          name="number"
+          pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
+          title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
+          required
+        />
         <button>Add contact</button>
         <h2>Contacts</h2>
         <ul>
