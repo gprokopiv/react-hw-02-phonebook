@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { children } from 'react';
 
 const Container = ({ children }) => {
   return <div>{children}</div>;
