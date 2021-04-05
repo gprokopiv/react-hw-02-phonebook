@@ -9,11 +9,15 @@ class App extends Component {
     number: '',
   };
   handleSubmit = e => {
-    const { name, value } = e.currentTarget;
+    e.preventDefault();
     this.props.onSubmit(this.state);
     this.setState({ name: '', number: '' });
   };
-  handleChange;
+  handleChange = e => {
+    const { name, value } = e.currentTarget;
+
+    this.setState({ [name]: value });
+  };
   render() {
     const { name, number } = this.state;
     return (
