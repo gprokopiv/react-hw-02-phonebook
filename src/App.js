@@ -8,19 +8,31 @@ class App extends Component {
     name: '',
     number: '',
   };
-
+  handleSubmit = e => {
+    const { name, value } = e.currentTarget;
+    this.props.onSubmit(this.state);
+    this.setState({ name: '', number: '' });
+  };
+  handleChange;
   render() {
+    const { name, number } = this.state;
     return (
       <>
         <h1>Phonebook</h1>
-        <span>Name</span>
-        <input
-          type="text"
-          name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-          required
-        />{' '}
+        <form onSubmit={this.handleSubmit}>
+          <label>Name</label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            placeholder="John Smith"
+            onChange={this.handleChange}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+            required
+          />
+        </form>
+
         <br></br>
         <p>Number</p>
         <input
