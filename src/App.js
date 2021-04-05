@@ -24,16 +24,25 @@ class App extends Component {
 
     this.setState({ [name]: value });
   };
+
   addContact = ({ name, number }) => {
     const id = uuidv4();
     const contact = {
+      id,
       name,
       number,
     };
   };
+
   onChange = e => {
     this.setState({ filter: e.currentTarget.value });
   };
+  // onDeleteContact = contactItem => {
+  //   const { contacts } = this.state;
+  //   this.setState(({ contacts }) => ({
+  //     contacts: contact.filter(contact => contact.id !== contactItem),
+  //   }));
+  // };
   render() {
     const { name, number } = this.state;
     return (
@@ -69,11 +78,24 @@ class App extends Component {
         <h2>Contacts</h2>
         <label>Find cntacts by name </label>
         <input type="text" value={this.filter} onChange={this.onChange} />
-        <ul>
+        {/* <ul>
+          {this.contacts.map(({ id, name, number }) => (
+            <li key={id}>
+              <p>
+                {name}: {number}{' '}
+              </p>
+              <button
+                type="button"
+                // onClick={() => onDeleteContact(id)}
+              >
+                {' '}
+              </button>
+            </li>
+          ))}
           <li>Rosie SImpson</li>
           <li>Eden Clements</li>
           <li>Hermione Kline</li>
-        </ul>
+        </ul> */}
       </Container>
     );
   }
