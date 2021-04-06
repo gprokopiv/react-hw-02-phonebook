@@ -3,6 +3,7 @@ import Container from './components/Container/';
 import { v4 as uuidv4 } from 'uuid';
 import ContactForm from './components/ContactForm';
 import Filter from './components/Filter';
+import ContactList from './components/ContactList';
 
 class App extends Component {
   state = {
@@ -39,12 +40,16 @@ class App extends Component {
   onChange = e => {
     this.setState({ filter: e.currentTarget.value });
   };
-  // onDeleteContact = contactItem => {
-  //   const { contacts } = this.state;
-  //   this.setState(({ contacts }) => ({
-  //     contacts: contact.filter(contact => contact.id !== contactItem),
-  //   }));
-  // };
+  deleteContact = contactItem => {
+    const { contacts } = this.state;
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(contact => contact.id !== contactItem),
+    }));
+  };
+
+  visibleContacts = () => {
+    return this.contact.name.toLowerCase().inclused(this.filter.toLowerCase());
+  };
   render() {
     const { name, number, filter, contacts } = this.state;
     return (
@@ -55,6 +60,14 @@ class App extends Component {
         <h2>Contacts</h2>
         {contacts.length > 1 && (
           <Filter value={this.filter} onChange={this.changeFilter} />
+        )}
+        {contacts.length > 0 ? (
+          <ContactList
+            contacts={this.visibleContacts}
+            onDeleteContact={this.deleteContact}
+          />
+        ) : (
+          <p>Your phonebook is empty</p>
         )}
 
         {/* <ul>
