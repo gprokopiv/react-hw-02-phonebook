@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Container from './components/Container/';
 import { v4 as uuidv4 } from 'uuid';
 import ContactForm from './components/ContactForm';
+import Filter from './components/Filter';
 
 class App extends Component {
   state = {
@@ -28,7 +29,7 @@ class App extends Component {
 
   addContact = ({ name, number }) => {
     const id = uuidv4();
-    const contact = {
+    const contacts = {
       id,
       name,
       number,
@@ -45,15 +46,17 @@ class App extends Component {
   //   }));
   // };
   render() {
-    const { name, number } = this.state;
+    const { name, number, filter, contacts } = this.state;
     return (
       <Container>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
 
         <h2>Contacts</h2>
-        <label>Find cntacts by name </label>
-        <input type="text" value={this.filter} onChange={this.onChange} />
+        {contacts.length > 1 && (
+          <Filter value={this.filter} onChange={this.changeFilter} />
+        )}
+
         {/* <ul>
           {this.contacts.map(({ id, name, number }) => (
             <li key={id}>
