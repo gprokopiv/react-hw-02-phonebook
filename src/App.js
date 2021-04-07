@@ -3,7 +3,7 @@ import Container from './components/Container/';
 import { v4 as uuidv4 } from 'uuid';
 import ContactForm from './components/ContactForm';
 import Filter from './components/Filter';
-import ContactList from './components/ContactList';
+import ContactList from './components/ContactList/ContactList/';
 
 class App extends Component {
   state = {
@@ -29,21 +29,38 @@ class App extends Component {
   // };
 
   addContact = ({ name, number }) => {
-    const id = uuidv4();
-    const contacts = {
-      id,
+    const contact = {
+      id: uuidv4(),
       name,
       number,
     };
-  };
 
+    const { contacts } = this.state;
+
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase(),
+      )
+    ) {
+      alert(`${name} is already in contacts.`);
+    } else if (contacts.find(contact => contact.number === number)) {
+      alert(`${number} is already in contacts.`);
+    } else if (name.trim() === '' || number.trim() === '') {
+      alert("Enter the contact's name and number phone!");
+    } else if (!/\d{3}[-]\d{2}[-]\d{2}/g.test(number)) {
+      alert('Enter the correct number phone!');
+    } else {
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts],
+      }));
+    }
+  };
   onChange = e => {
     this.setState({ filter: e.currentTarget.value });
   };
-  deleteContact = contactItem => {
-    const { contacts } = this.state;
-    this.setState(({ contacts }) => ({
-      contacts: contacts.filter(contact => contact.id !== contactItem),
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.filter(contact => contact.id !== contactId),
     }));
   };
 
@@ -58,36 +75,17 @@ class App extends Component {
         <ContactForm onSubmit={this.addContact} />
 
         <h2>Contacts</h2>
-        {contacts.length > 1 && (
+        {/* {contacts.length > 1 && (
           <Filter value={this.filter} onChange={this.changeFilter} />
         )}
         {contacts.length > 0 ? (
           <ContactList
             contacts={this.visibleContacts}
-            onDeleteContact={this.deleteContact}
+            onDelete={this.deleteContact}
           />
         ) : (
           <p>Your phonebook is empty</p>
-        )}
-
-        {/* <ul>
-          {this.contacts.map(({ id, name, number }) => (
-            <li key={id}>
-              <p>
-                {name}: {number}{' '}
-              </p>
-              <button
-                type="button"
-                // onClick={() => onDeleteContact(id)}
-              >
-                {' '}
-              </button>
-            </li>
-          ))}
-          <li>Rosie SImpson</li>
-          <li>Eden Clements</li>
-          <li>Hermione Kline</li>
-        </ul> */}
+        )} */}
       </Container>
     );
   }
