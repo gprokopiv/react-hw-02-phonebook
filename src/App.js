@@ -9,8 +9,23 @@ class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
+  };
+  nameInputId = uuidv4();
+
+  handleNameChange = e => {
+    this.setState({ name: e.target.value });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+
+    this.props.onSubmit(this.state.name);
+  };
+
+  handleNumberChange = event => {
+    this.setState({ number: event.target.value });
+  };
   // state = {
   //   contacts: [
   //     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -77,24 +92,40 @@ class App extends Component {
     return (
       <Container>
         <h1>Phonebook</h1>
-        <form>
-          <label>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor={this.nameInputId}>
             Name
             <input
               name="name"
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
               required
-              // value={login}
-              // onChange={this.handleChange}
+              value={this.state.name}
+              onChange={this.handleNameChange}
             />
+          </label>
+
+          <label>
+            {' '}
+            Number{' '}
+            <input
+              type="tel"
+              name="number"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
+              required
+              value={this.state.number}
+              onChange={this.handleNumberChange}
+            ></input>
           </label>
 
           <button type="submit">Add contact</button>
         </form>
         <h2> Contacts</h2>
         <ul>
-          <li>Rosie Simpson</li>
+          <li key={this.nameInputId}>
+            <p>{this.name}</p>
+          </li>
           <li>Hermione Kline</li>
           <li>Eden Clements</li>
         </ul>
