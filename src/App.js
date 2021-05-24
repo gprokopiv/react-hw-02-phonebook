@@ -4,6 +4,7 @@ import ContactForm from './components/ContactForm';
 import Filter from './components/Filter';
 import ContactList from './components/ContactList/ContactList/';
 import { v4 as uuidv4 } from 'uuid';
+import SignUpForm from './components/SignUpForm';
 
 class App extends Component {
   state = {
@@ -145,6 +146,7 @@ class App extends Component {
         ) : (
           <p>Your phonebook is empty</p>
         )} */}
+        <SignUpForm />
       </Container>
     );
   }
