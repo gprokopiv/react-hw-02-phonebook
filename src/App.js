@@ -8,101 +8,44 @@ import SignUpForm from './components/SignUpForm';
 
 class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
     name: '',
     number: '',
   };
-  nameInputId = uuidv4();
 
-  handleNameChange = e => {
-    this.setState({ name: e.target.value });
+  handleChange = event => {
+    const { name, value } = event.currentTarget;
+    this.setState({ [name]: value });
   };
-
   handleSubmit = event => {
     event.preventDefault();
 
-    this.props.onSubmit(this.state.name);
+    this.props.onSubmit(this.state);
+    this.setState({ name: '', number: '' });
   };
 
-  handleNumberChange = event => {
-    this.setState({ number: event.target.value });
-  };
-  // state = {
-  //   contacts: [
-  //     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  //     { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  //     { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  //     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  //   ],
-  //   name: '',
-  //   number: '',
-  //   filter: '',
-  // };
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   this.props.onSubmit(this.state);
-  //   this.setState({ name: '', number: '' });
-  // };
-  // handleChange = e => {
-  //   const { name, value } = e.currentTarget;
-
-  //   this.setState({ [name]: value });
-  // };
-
-  // addContact = ({ name, number }) => {
-  //   const contact = {
-  //     id: uuidv4(),
-  //     name,
-  //     number,
-  //   };
-
-  //   const { contacts } = this.state;
-
-  //   if (
-  //     contacts.find(
-  //       contact => contact.name.toLowerCase() === name.toLowerCase(),
-  //     )
-  //   ) {
-  //     alert(`${name} is already in contacts.`);
-  //   } else if (contacts.find(contact => contact.number === number)) {
-  //     alert(`${number} is already in contacts.`);
-  //   } else if (name.trim() === '' || number.trim() === '') {
-  //     alert("Enter the contact's name and number phone!");
-  //   } else if (!/\d{3}[-]\d{2}[-]\d{2}/g.test(number)) {
-  //     alert('Enter the correct number phone!');
-  //   } else {
-  //     this.setState(({ contacts }) => ({
-  //       contacts: [contact, ...contacts],
-  //     }));
-  //   }
-  // };
-  // onChange = e => {
-  //   this.setState({ filter: e.currentTarget.value });
-  // };
-  // deleteContact = contactId => {
-  //   this.setState(prevState => ({
-  //     contacts: prevState.filter(contact => contact.id !== contactId),
-  //   }));
-  // };
-
-  // visibleContacts = () => {
-  //   return this.contact.name.toLowerCase().inclused(this.filter.toLowerCase());
-  // };
   render() {
-    // const { name, number, filter, contacts } = this.state;
+    const { name, number, filter, contacts } = this.state;
     return (
       <Container>
         <h1>Phonebook</h1>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor={this.nameInputId}>
+          <label>
             Name
             <input
               name="name"
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
               required
-              value={this.state.name}
-              onChange={this.handleNameChange}
+              value={name}
+              placeholder="Annie Copeland"
+              onChange={this.handleChange}
             />
           </label>
 
@@ -115,8 +58,9 @@ class App extends Component {
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
               required
-              value={this.state.number}
-              onChange={this.handleNumberChange}
+              value={number}
+              placeholder="227-91-26"
+              onChange={this.handleChange}
             ></input>
           </label>
 
