@@ -18,6 +18,14 @@ class App extends Component {
     name: '',
     number: '',
   };
+  addContact = ({ name, number }) => {
+    const contact = {
+      id: uuidv4(),
+      name,
+      number,
+    };
+    const { contacts } = this.state;
+  };
 
   handleChange = event => {
     const { name, value } = event.currentTarget;
@@ -28,6 +36,10 @@ class App extends Component {
 
     this.props.onSubmit(this.state);
     this.setState({ name: '', number: '' });
+  };
+
+  changeFilter = event => {
+    this.setState({ filter: event.currentTarget.value });
   };
 
   render() {
@@ -64,16 +76,27 @@ class App extends Component {
             ></input>
           </label>
 
-          <button type="submit">Add contact</button>
+          <button type="submit" onSubmit={this.addContact}>
+            Add contact
+          </button>
         </form>
         <h2> Contacts</h2>
-        <ul>
+        <label>
+          Find contacts by name
+          <input
+            type="text"
+            value={filter}
+            onChange={this.changeFilter}
+          ></input>
+        </label>
+
+        {/* <ul>
           <li key={this.nameInputId}>
             <p>{this.name}</p>
           </li>
           <li>Hermione Kline</li>
           <li>Eden Clements</li>
-        </ul>
+        </ul> */}
 
         {/* <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} /> */}
