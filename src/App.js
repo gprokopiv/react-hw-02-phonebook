@@ -27,19 +27,13 @@ class App extends Component {
     const { contacts } = this.state;
   };
 
-  handleChange = event => {
-    const { name, value } = event.currentTarget;
-    this.setState({ [name]: value });
-  };
-  handleSubmit = event => {
-    event.preventDefault();
-
-    this.props.onSubmit(this.state);
-    this.setState({ name: '', number: '' });
-  };
-
   changeFilter = event => {
     this.setState({ filter: event.currentTarget.value });
+  };
+
+  getVisibleContacts = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(contact => contact.name.toLowerCase());
   };
 
   render() {
@@ -47,49 +41,14 @@ class App extends Component {
     return (
       <Container>
         <h1>Phonebook</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name
-            <input
-              name="name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-              required
-              value={name}
-              placeholder="Annie Copeland"
-              onChange={this.handleChange}
-            />
-          </label>
+        <ContactForm onSubmit={this.addContact} />
 
-          <label>
-            {' '}
-            Number{' '}
-            <input
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
-              required
-              value={number}
-              placeholder="227-91-26"
-              onChange={this.handleChange}
-            ></input>
-          </label>
-
-          <button type="submit" onSubmit={this.addContact}>
-            Add contact
-          </button>
-        </form>
         <h2> Contacts</h2>
-        <label>
-          Find contacts by name
-          <input
-            type="text"
-            value={filter}
-            onChange={this.changeFilter}
-          ></input>
-        </label>
-
+        <Filter value={filter} onChange={this.changeFilter} />
+        {/* <ContactList
+          contacts={this.getVisibleContacts}
+          onDeleteContact={this.deleteContact}
+        /> */}
         {/* <ul>
           <li key={this.nameInputId}>
             <p>{this.name}</p>
