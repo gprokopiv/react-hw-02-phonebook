@@ -35,9 +35,14 @@ class App extends Component {
     const { contacts, filter } = this.state;
     return contacts.filter(contact => contact.name.toLowerCase());
   };
-
+  deleteContact = contactNew => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactNew),
+    }));
+  };
   render() {
     const { name, number, filter, contacts } = this.state;
+
     return (
       <Container>
         <h1>Phonebook</h1>
@@ -45,9 +50,10 @@ class App extends Component {
 
         <h2> Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
+
         {/* <ContactList
-          contacts={this.getVisibleContacts}
-          onDeleteContact={this.deleteContact}
+          contacts={this.getVisibleContacts} */}
+        {/* // onDeleteContact={this.deleteContact}
         /> */}
         {/* <ul>
           <li key={this.nameInputId}>
