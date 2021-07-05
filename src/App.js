@@ -5,27 +5,38 @@ import Filter from './components/Filter';
 import ContactList from './components/ContactList/ContactList/';
 import { v4 as uuidv4 } from 'uuid';
 import SignUpForm from './components/SignUpForm';
+import Data from './data/conacts.json';
+
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: Data,
     filter: '',
     name: '',
     number: '',
   };
-  addContact = ({ name, number }) => {
-    const contact = {
-      id: uuidv4(),
-      name,
-      number,
-    };
+  addContact = data => {
     const { contacts } = this.state;
+    
+    const contactIsValid = this.validateContact(data, contacts);
+
+    if(contactIsValid) {
+      data.id = uuidv4();
+      this.setState(({ contacts }) => ({
+        contacts: [data, ...contacts],
+      })
+      );
+    }
   };
+
+  validateContact =(data, contacts) => {
+    if (contacts.some(({ name }) => name === data.name)) {
+      alert(`${data.name} is already in contacts`);
+      return false;
+    } else return true;
+  }
+
+
 
   changeFilter = event => {
     this.setState({ filter: event.currentTarget.value });
